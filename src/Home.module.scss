@@ -1,0 +1,31 @@
+.video {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  filter: brightness(70%);
+}
+
+.title {
+  grid-area: main;
+  color:white;
+  text-align: center;
+  font-family: "WindSong";
+  font-size: 3rem;
+  margin: 0;
+  @media(max-width: 800px) {
+    font-size: 2rem;
+  }
+}
+
+.paddle {
+  width: 400px;
+  margin: 0 auto;
+  @media(max-width: 800px) {
+    margin-bottom: 10rem;
+    width: 300px;
+  }
+}
