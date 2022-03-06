@@ -32,7 +32,6 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import axios from 'axios';
 import fileDownload from "js-file-download";
 import { scale } from "@cloudinary/url-gen/actions/resize";
-import stamp from './assets/images/stamp.png';
 
 const Photo = () => {
 
@@ -51,12 +50,15 @@ const Photo = () => {
   const [authOpen, setAuthOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
 
+  const cloudinary = new Cloudinary({
+    cloud: {
+      cloudName: 'dmb0zn354',
+    }
+  });
+
+  const stamp = cloudinary.image('Fotky/general/stamp_xljw1x.png'); 
+
   const fetchImages = async (tag) => {
-    const cloudinary = new Cloudinary({
-      cloud: {
-        cloudName: 'dmb0zn354',
-      }
-    });
     const response = await axios.get(`https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/list/${tag}.json`);
     const cloudinaryImages = response.data.resources.map((photos) => cloudinary.image(photos.public_id).quality('auto').resize(scale(800)))
     setPhotos(cloudinaryImages)
@@ -212,7 +214,7 @@ const Photo = () => {
 
   return (
     <>
-      <img src={stamp} alt="razitko" className={fotoStyles.stamp} />
+      <AdvancedImage cldImg={stamp} className={fotoStyles.stamp} />
       <Snackbar open={openAlert} onClose={handleCloseAlert} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
         <Alert onClose={handleCloseAlert} severity="info" sx={{ width: '100%', marginTop: '80px', borderRadius: '25px' }}>
           Tyto fotografie jsou dostupné jen po přihlášení

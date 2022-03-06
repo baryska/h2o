@@ -1,20 +1,26 @@
 import React from "react";
 import Layout from './components/Layout';
-import River from './assets/video.mp4';
 import "@fontsource/windsong"
 import homeStyles from './Home.module.scss';
-import Paddle from './assets/images/paddle-white.png'
-
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, AdvancedVideo, lazyload } from '@cloudinary/react';
 
 const Home = () => {
+  const cloudinary = new Cloudinary({
+    cloud: {
+      cloudName: 'dmb0zn354'
+    }
+  });
+
+  const paddle = cloudinary.image('Fotky/general/paddle-white_fk7fp2.png');
+  const video = cloudinary.video('Fotky/video_dsc8en')
+
   return (
     <Layout>
-      <video autoPlay muted loop className={homeStyles.video}>
-        <source src={River} type="video/mp4" />
-      </video>
+      <AdvancedVideo cldVid={video} autoPlay muted loop plugins={[lazyload()]} className={homeStyles.video}/>
       <div>
         <h1 className={homeStyles.title}>Sdružení přátel vody H2O</h1>
-        <img src={Paddle} alt="pádlo" className={homeStyles.paddle} />
+        <AdvancedImage cldImg={paddle} className={homeStyles.paddle} />
       </div>
     </Layout>
   )

@@ -2,17 +2,25 @@ import React from 'react';
 import Layout from './components/Layout'
 import Fab from '@mui/material/Fab';
 import riverStyles from './Rivers.module.scss';
-import Vltava from './assets/images/vltava.jpg'
-import Luznice from './assets/images/luznice.png';
-import Loket from './assets/images/loket2.jpg';
-import Pisek from './assets/images/pisek.jpg';
-import stamp from './assets/images/stamp.png';
-
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, lazyload } from '@cloudinary/react';
 
 const Rivers = () => {
+  const cloudinary = new Cloudinary({
+    cloud: {
+      cloudName: 'dmb0zn354'
+    }
+  });
+
+  const vltava = cloudinary.image('Fotky/general/vltava_ugkvgb.jpg'); 
+  const luznice = cloudinary.image('Fotky/general/luznice_vpyuzj.png'); 
+  const loket = cloudinary.image('Fotky/general/loket2_p5vwbb.jpg'); 
+  const pisek = cloudinary.image('Fotky/general/pisek_vc9xs8.jpg'); 
+  const stamp = cloudinary.image('Fotky/general/stamp_xljw1x.png'); 
+
   return (
     <Layout>
-      <img src={stamp} alt="razitko" className={riverStyles.stamp} />
+      <AdvancedImage cldImg={stamp} plugins={[lazyload()]} className={riverStyles.stamp} />
       <div className={riverStyles.layout}>
         <div className={riverStyles.info}>
           <Fab
@@ -20,7 +28,7 @@ const Rivers = () => {
             className={riverStyles.river}
             style={{ backgroundColor: '#3CBFD4' }}
           >VLTAVA</Fab>
-           <img src={Vltava} alt="vltava" className={riverStyles.image}/>
+           <AdvancedImage cldImg={vltava} plugins={[lazyload()]} className={riverStyles.image}/>
           <h4>ITINERÁŘ</h4>
           <p>Vltavu začínáme na <strong>Soumarském mostě</strong>, z něhož většinou chodíme na výlet na Boubín. Poté se přesouváme do <strong>Nové Pece</strong>, dnes již musíme v doprovodu průvodce Národního parku Šumava. Z <strong>Nové Pece</strong> chodíme na výlet na Třístoličník a další dva dny přejíždíme vodní nádrž Lipno s přespáním na <strong>Chemoprojektu</strong>. Do <strong>Vyššího brodu</strong> pak jdeme kolem Čertových proudů pešky a lodě převážíme. Dalšími zastávkami jsou tábořiště <strong>Zátoň</strong> a <strong>Český Krumlov</strong>, kde se zdržíme dvě noci, abychom si stihli prohlédnout město. Z Českého Krumlova pokračujeme na krásné tábořiště <strong>Dívčí kámen</strong> a celé putování končíme v <strong>Českých Budějovicích</strong>, kde by chtěl žít každý.</p>
           <h4>VODÁCKÁ ŘEKA</h4>
@@ -41,7 +49,7 @@ const Rivers = () => {
             className={riverStyles.river}
             style={{ backgroundColor: '#34D5CA' }}
           >LUŽNICE</Fab>
-           <img src={Luznice} alt="vltava" className={riverStyles.image}/>
+           <AdvancedImage cldImg={luznice} plugins={[lazyload()]} className={riverStyles.image}/>
           <h4>ITINERÁŘ</h4>
           <p>Lužnici začínáme v <strong>Suchdole nad Lužnicí</strong>, odkud pokračujeme po jednom z nejkrásnějších meandrovitých úseků Lužnice na 
            <strong> Majdalenu</strong> a z Majdaleny plujeme po Nové řece na <strong>Mláku</strong>. Z Mláky chodíme na celodenní výlet do Třeboně. 
@@ -66,7 +74,7 @@ const Rivers = () => {
             className={riverStyles.river}
             style={{ backgroundColor: '#6AE7AF' }}
           >OTAVA</Fab>
-          <img src={Pisek} alt="vltava" className={riverStyles.image}/>
+          <AdvancedImage cldImg={pisek} plugins={[lazyload()]} className={riverStyles.image}/>
           <h4>ITINERÁŘ</h4>
           <p>Vltavu začínáme na <strong>Soumarském mostě</strong>, z něhož většinou chodíme na výlet na Boubín. Poté se přesouváme do <strong>Nové Pece</strong>, dnes již musíme v doprovodu průvodce Národního parku Šumava. Z <strong>Nové Pece</strong> chodíme na výlet na Třístoličník a další dva dny přejíždíme vodní nádrž Lipno s přespáním na <strong>Chemoprojektu</strong>. Do <strong>Vyššího brodu</strong> pak jdeme kolem Čertových proudů pešky a lodě převážíme. Dalšími zastávkami jsou tábořiště <strong>Zátoň</strong> a <strong>Český Krumlov</strong>, kde se zdržíme dvě noci, abychom si stihli prohlédnout město. Z Českého Krumlova pokračujeme na krásné tábořiště <strong>Dívčí kámen</strong> a celé putování končíme v <strong>Českých Budějovicích</strong>, kde by chtěl žít každý.</p>
           <h4>VODÁCKÁ ŘEKA</h4>
@@ -83,7 +91,7 @@ const Rivers = () => {
             className={riverStyles.river}
             style={{ backgroundColor: '#AFF38C' }}
           >OHŘE</Fab>
-          <img src={Loket} alt="vltava" className={riverStyles.image}/>
+          <AdvancedImage cldImg={loket} alt="vltava" plugins={[lazyload()]} className={riverStyles.image}/>
           <h4>ITINERÁŘ</h4>
           <p>Vltavu začínáme na <strong>Soumarském mostě</strong>, z něhož většinou chodíme na výlet na Boubín. Poté se přesouváme do <strong>Nové Pece</strong>, dnes již musíme v doprovodu průvodce Národního parku Šumava. Z <strong>Nové Pece</strong> chodíme na výlet na Třístoličník a další dva dny přejíždíme vodní nádrž Lipno s přespáním na <strong>Chemoprojektu</strong>. Do <strong>Vyššího brodu</strong> pak jdeme kolem Čertových proudů pešky a lodě převážíme. Dalšími zastávkami jsou tábořiště <strong>Zátoň</strong> a <strong>Český Krumlov</strong>, kde se zdržíme dvě noci, abychom si stihli prohlédnout město. Z Českého Krumlova pokračujeme na krásné tábořiště <strong>Dívčí kámen</strong> a celé putování končíme v <strong>Českých Budějovicích</strong>, kde by chtěl žít každý.</p>
           <h4>VODÁCKÁ ŘEKA</h4>
