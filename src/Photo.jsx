@@ -68,6 +68,7 @@ const Photo = () => {
 
   useEffect(() => {
     fetchImages('sample');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
