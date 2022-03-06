@@ -56,7 +56,7 @@ const Photo = () => {
     }
   });
 
-  const stamp = cloudinary.image('Fotky/general/stamp_xljw1x.png'); 
+  const stamp = cloudinary.image('Fotky/general/stamp_xljw1x.png');
 
   const fetchImages = async (tag) => {
     const response = await axios.get(`https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/list/${tag}.json`);
@@ -201,6 +201,9 @@ const Photo = () => {
         case 'otava2020':
           setRiverTitle('Otava 2020')
           break;
+        case 'luznice2021':
+          setRiverTitle('Lužnice 2021')
+          break;
         default: return;
       }
     }
@@ -241,12 +244,12 @@ const Photo = () => {
               />
             ) : null}
             {/* Todle asi bude blbě */}
-            
+
             <FiDownload
               className={fotoStyles.downloadIcon}
               onClick={() => handleDownloadPhoto(urls[index], `${urls[index].split('Fotky/')[1]}.jpg`)}
             />
-           
+
           </div>
         </div>
       ) : null}
@@ -291,6 +294,12 @@ const Photo = () => {
             onClick={() => handleClickRiver('otava2020')}
           >
             Otava 2020
+          </Fab>
+          <Fab variant="extended"
+            className={`${fotoStyles.button} ${fotoStyles.button_six}`}
+            onClick={() => handleClickRiver('luznice2021')}
+          >
+            Lužnice 2021
           </Fab>
         </div>
         <div className={fotoStyles.auth}>

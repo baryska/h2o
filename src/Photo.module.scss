@@ -68,10 +68,7 @@ body {
       width: 600px
     }
     @media (max-width: 600px) {
-      width: 400px;
-    }
-    @media (max-width: 400px) {
-      width: 300px;
+      width: 100vw;
     }
   }
 }
@@ -179,6 +176,9 @@ body {
     }
     &_five {
       background-color: #F9F871;
+    }
+    &_six {
+      background-color: #3CBFD4;
     }
     @media (max-width: 900px) {
       margin: 10px 20px;
