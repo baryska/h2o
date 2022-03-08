@@ -60,11 +60,14 @@ const Photo = () => {
 
   const fetchImages = async (tag) => {
     const response = await axios.get(`https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/list/${tag}.json`);
+  
+    console.log('ahoj')
     const cloudinaryImages = response.data.resources.map((photos) => cloudinary.image(photos.public_id).quality('auto').resize(scale(800)))
     setPhotos(cloudinaryImages)
     const urls = cloudinaryImages.map((image) => image.toURL())
     setUrls(urls)
   }
+
 
   useEffect(() => {
     fetchImages('sample');
@@ -132,8 +135,6 @@ const Photo = () => {
       });
   }
 
-  console.log(urls)
-
   const modalRef = useRef();
 
   const handleOpenModal = (index) => {
@@ -169,7 +170,6 @@ const Photo = () => {
     setAuthOpen(false);
   }
 
-  console.log(authOpen)
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
