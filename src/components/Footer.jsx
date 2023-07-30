@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className={footerStyles.footer}>
       <Tooltip
         title="baryska@gmail.com Tech Stack of this page: React.js, Firebase authentification, Cloudinary (REST API), Material UI, SCSS in modules">
-        <h3>© Barbora Skálová, 2022 </h3>
+        <h3>© Barbora Skálová, 2023 </h3>
       </Tooltip>
 
     </footer>
