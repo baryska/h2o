@@ -34,13 +34,16 @@ import axios from 'axios';
 import fileDownload from "js-file-download";
 import { scale } from "@cloudinary/url-gen/actions/resize";
 
-const RIVERS = ['otava2016', 'ohre2017', 'luznice2018', 'vltava2019', 'otava2020', 'luznice2021', 'ohre2022', 'vltava2023']
-
-const splitString = (input) => {
-  const letters = input.match(/[a-zA-Z]+/)[0];
-  const numbers = input.match(/\d+/)[0];
-  return `${letters}${' '}${numbers}`;
-}
+const RIVERS = [
+  {label:'otava2016', title: 'Otava 2016'},
+  {label: 'ohre2017', title: 'Ohře 2017'},
+  {label: 'luznice2018', title: 'Lužnice 2018'},
+  {label: 'vltava2019', title: 'Vltava 2019'},
+  {label: 'otava2020', title: 'Otava 2020'},
+  {label: 'luznice2021', title: 'Lužnice 2021'},
+  {label: 'ohre2022', title: 'Ohře 2022'},
+  {label: 'vltava2023', title: 'Vltava 2023'}
+  ]
 
 const Photo = () => {
 
@@ -268,7 +271,6 @@ const Photo = () => {
         </div>
       ) : null}
       <Layout>
-        {/* <div className={fotoStyles.photos_container}> */}
         <div className={fotoStyles.rivers_buttons}>
           {user === null ? (
             <Fab onClick={() => setAuthOpen(true)} className={fotoStyles.loginButton} >
@@ -282,9 +284,9 @@ const Photo = () => {
           {RIVERS.map((river, index) => (
             <Fab variant="extended"
               className={`${fotoStyles.button} ${fotoStyles[`button_${index + 1}`]}`}
-              onClick={() => handleClickRiver(river)}
+              onClick={() => handleClickRiver(river.label)}
             >
-              {splitString(river)}
+              {river.title}
             </Fab>
           ))}
         </div>
@@ -333,8 +335,6 @@ const Photo = () => {
           )}
 
         </div>
-        {/* <div div className={modalIsOpen ? fotoStyles.layout : ''}> */}
-        {/* {user !== null && ( */}
         <>
           <Divider
             sx={{ color: "white", width: "80%", margin: "3rem auto 1rem auto" }} light
@@ -379,11 +379,6 @@ const Photo = () => {
             <div className={fotoStyles.text}></div>
           </div>
         </>
-        {/* )} */}
-        {/* </div> */}
-
-        {/* </div> */}
-
       </Layout >
     </>
   )
