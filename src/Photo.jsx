@@ -33,6 +33,8 @@ import axios from 'axios';
 import fileDownload from "js-file-download";
 import { scale } from "@cloudinary/url-gen/actions/resize";
 
+const RIVERS = ['otava2016', 'ohre2017', 'luznice2018', 'vltava2019', 'otava2020', 'luznice2021', 'ohre2022', 'vltava2023']
+
 const Photo = () => {
 
   const [photos, setPhotos] = useState([]);
@@ -60,14 +62,12 @@ const Photo = () => {
 
   const fetchImages = async (tag) => {
     const response = await axios.get(`https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/list/${tag}.json`);
-  
-    console.log('ahoj')
-    const cloudinaryImages = response.data.resources.map((photos) => cloudinary.image(photos.public_id).quality('auto').resize(scale(800)))
+    const orderedImages = tag !== 'sample' ? response.data.resources.sort((a,b) => a.metadata[0].value - b.metadata[0].value) : response.data.resources;
+    const cloudinaryImages = orderedImages.map((photos) => cloudinary.image(photos.public_id).quality('auto').resize(scale(800)))
     setPhotos(cloudinaryImages)
     const urls = cloudinaryImages.map((image) => image.toURL())
     setUrls(urls)
   }
-
 
   useEffect(() => {
     fetchImages('sample');
@@ -265,42 +265,14 @@ const Photo = () => {
               <LogoutIcon />
             </Fab>
           )}
-          <Fab variant="extended"
-            className={`${fotoStyles.button} ${fotoStyles.button_one}`}
-            onClick={() => handleClickRiver('otava2016')}
-          >
-            Otava 2016
-          </Fab>
-          <Fab variant="extended"
-            className={`${fotoStyles.button} ${fotoStyles.button_two}`}
-            onClick={() => handleClickRiver('ohre2017')}
-          >
-            Ohře 2017
-          </Fab>
-          <Fab variant="extended"
-            className={`${fotoStyles.button} ${fotoStyles.button_three}`}
-            onClick={() => handleClickRiver('luznice2018')}
-          >
-            Lužnice 2018
-          </Fab>
-          <Fab variant="extended"
-            className={`${fotoStyles.button} ${fotoStyles.button_four}`}
-            onClick={() => handleClickRiver('vltava2019')}
-          >
-            Vltava 2019
-          </Fab>
-          <Fab variant="extended"
-            className={`${fotoStyles.button} ${fotoStyles.button_five}`}
-            onClick={() => handleClickRiver('otava2020')}
-          >
-            Otava 2020
-          </Fab>
-          <Fab variant="extended"
-            className={`${fotoStyles.button} ${fotoStyles.button_six}`}
-            onClick={() => handleClickRiver('luznice2021')}
-          >
-            Lužnice 2021
-          </Fab>
+          {RIVERS.map((river, index) => (
+             <Fab variant="extended"
+             className={`${fotoStyles.button} ${fotoStyles[`button_${index + 1}`]}`}
+             onClick={() => handleClickRiver(river)}
+           >
+             {river}
+           </Fab>
+          ))}
         </div>
         <div className={fotoStyles.auth}>
           {user === null ? (

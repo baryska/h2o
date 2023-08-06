@@ -166,23 +166,29 @@ body {
     font-size: 18px; 
     width: 8rem; 
     padding: 0;
-    &_one {
+    &_1 {
       background-color: #3CBFD4; 
     }
-    &_two {
+    &_2 {
       background-color: #34D5CA; 
     }
-    &_three {
+    &_3 {
       background-color: #6AE7AF;
     }
-    &_four {
+    &_4 {
       background-color: #AFF38C;
     }
-    &_five {
+    &_5 {
       background-color: #F9F871;
     }
-    &_six {
+    &_6 {
       background-color: #3CBFD4;
+    }
+    &_7 {
+      background-color: #34D5CA;
+    }
+    &_8 {
+      background-color: #6AE7AF;
     }
     @media (max-width: 900px) {
       margin: 10px 20px;
