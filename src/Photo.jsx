@@ -179,6 +179,7 @@ const Photo = () => {
   const handleSignOut = () => {
     signOut(auth);
     setAuthOpen(false);
+    fetchImages('sample')
   }
 
 
