@@ -153,8 +153,8 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  position: absolute;
   top: 10rem;
+  position: fixed;
   @media (max-width: 600px) {
     position: static;
     display:block;
