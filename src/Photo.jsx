@@ -10,6 +10,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import fotoStyles from './Photo.module.scss'
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
+import CircularProgress from '@mui/material/CircularProgress';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
@@ -34,6 +35,12 @@ import fileDownload from "js-file-download";
 import { scale } from "@cloudinary/url-gen/actions/resize";
 
 const RIVERS = ['otava2016', 'ohre2017', 'luznice2018', 'vltava2019', 'otava2020', 'luznice2021', 'ohre2022', 'vltava2023']
+
+const splitString = (input) => {
+  const letters = input.match(/[a-zA-Z]+/)[0];
+  const numbers = input.match(/\d+/)[0];
+  return `${letters}${' '}${numbers}`;
+}
 
 const Photo = () => {
 
@@ -61,8 +68,9 @@ const Photo = () => {
   const stamp = cloudinary.image('Fotky/general/stamp_xljw1x.png');
 
   const fetchImages = async (tag) => {
+    setUrls('loading')
     const response = await axios.get(`https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/list/${tag}.json`);
-    const orderedImages = tag !== 'sample' ? response.data.resources.sort((a,b) => a.metadata[0].value - b.metadata[0].value) : response.data.resources;
+    const orderedImages = tag !== 'sample' ? response.data.resources.sort((a, b) => a.metadata[0].value - b.metadata[0].value) : response.data.resources;
     const cloudinaryImages = orderedImages.map((photos) => cloudinary.image(photos.public_id).quality('auto').resize(scale(800)))
     setPhotos(cloudinaryImages)
     const urls = cloudinaryImages.map((image) => image.toURL())
@@ -204,6 +212,12 @@ const Photo = () => {
         case 'luznice2021':
           setRiverTitle('Lužnice 2021')
           break;
+        case 'ohre2022':
+          setRiverTitle('Ohře 2022')
+          break;
+        case 'vltava2023':
+          setRiverTitle('Vltava 2023')
+          break;
         default: return;
       }
     }
@@ -266,12 +280,12 @@ const Photo = () => {
             </Fab>
           )}
           {RIVERS.map((river, index) => (
-             <Fab variant="extended"
-             className={`${fotoStyles.button} ${fotoStyles[`button_${index + 1}`]}`}
-             onClick={() => handleClickRiver(river)}
-           >
-             {river}
-           </Fab>
+            <Fab variant="extended"
+              className={`${fotoStyles.button} ${fotoStyles[`button_${index + 1}`]}`}
+              onClick={() => handleClickRiver(river)}
+            >
+              {splitString(river)}
+            </Fab>
           ))}
         </div>
         <div className={fotoStyles.auth}>
@@ -335,30 +349,32 @@ const Photo = () => {
               <p>{riverTitle}</p>
             </div>
           }
-          <div className={`${fotoStyles.container} ${modalIsOpen ? fotoStyles.containerOpaque : ''}`}>
-            {urls.map((url, ix) => {
-              return (
+          <div
+            className={`${fotoStyles.container} ${modalIsOpen ? fotoStyles.containerOpaque : ''}`}
+            style={urls === 'loading' ? { display: 'block', height: '65vh' } : {}}>
+            {urls === 'loading' ? (
+              <CircularProgress />
+            ) : urls.map((url, ix) =>
+            (
+              <div
+                className={fotoStyles.galleryItem}
+                key={ix}>
                 <div
-                  className={fotoStyles.galleryItem}
-                  key={ix}>
-                  <div
-                    className={fotoStyles.image}
-                    onClick={() => handleOpenModal(ix)}
-                  >
-                    <LazyLoadImage
-                      className={fotoStyles.advancedImage}
-                      src={url}
-                      effect="blur"
-                      alt=""
-                    />
-                    <div className={fotoStyles.overlay}>
-                      <CgArrowsExpandRight className={fotoStyles.expandArrow} />
-                    </div>
+                  className={fotoStyles.image}
+                  onClick={() => handleOpenModal(ix)}
+                >
+                  <LazyLoadImage
+                    className={fotoStyles.advancedImage}
+                    src={url}
+                    effect="blur"
+                    alt=""
+                  />
+                  <div className={fotoStyles.overlay}>
+                    <CgArrowsExpandRight className={fotoStyles.expandArrow} />
                   </div>
                 </div>
-              )
-            }
-            )
+              </div>
+            ))
             }
             <div className={fotoStyles.text}></div>
           </div>
